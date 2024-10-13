@@ -1,15 +1,34 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from "vue";
+import frontServiceConnect from "../api/frontServiceConnect.js";
+
+const ListAllPosts = ref("");
+
+const ListPosts = () => {
+  frontServiceConnect
+    .getPosts()
+    .then((response) => {
+      ListAllPosts.value = response.data.data;
+      console.log(response.data.data);
+    })
+    .catch((error) => {
+      console.error("Error fetching posts:", error);
+    });
+};
 
 defineProps({
   msg: String,
-})
+});
 
-const count = ref(0)
+onMounted(() => {
+  ListPosts();
+});
+
+const count = ref(0);
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
+  <h1>{{ ListAllPosts }}</h1>
 
   <div class="card">
     <button type="button" @click="count++">count is {{ count }}</button>
