@@ -63,7 +63,6 @@ const isLoggedIn = ref(false);
 onMounted(() => {
   const token = localStorage.getItem("token");
   isLoggedIn.value = !!token;
-  console.log(isLoggedIn);
 });
 </script>
 

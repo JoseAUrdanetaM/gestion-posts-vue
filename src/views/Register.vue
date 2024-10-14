@@ -70,7 +70,6 @@ const registerUser = async () => {
       "http://127.0.0.1:8000/api/register",
       user.value
     );
-    console.log("Usuario registrado:", response.data);
     location.reload();
     router.push("/login");
   } catch (error) {

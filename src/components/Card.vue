@@ -63,7 +63,7 @@ const props = defineProps({
   title: String,
   description: String,
   image: String, // Nueva prop para la imagen
-  author: String, // Nueva prop para la imagen
+  author: Number, // Nueva prop para la imagen
   canEdit: Boolean, // Prop para determinar si el usuario puede editar
 });
 

@@ -85,7 +85,6 @@ const fetchUsers = () => {
     .getUsers()
     .then((response) => {
       users.value = response.data.data;
-      console.log(users);
     })
     .catch((error) => {
       console.error("No se pudieron cargar los usuarios.", error);

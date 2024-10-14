@@ -60,13 +60,12 @@ const login = async () => {
       password: password.value,
     });
 
-    console.log(response.data); // <-- Agrega esto para inspeccionar la respuesta del servidor
-
     // Verifica si el token está en la respuesta
     if (response.data.accessToken) {
       localStorage.setItem("token", response.data.accessToken);
       localStorage.setItem("userName", response.data.name);
       localStorage.setItem("userRole", response.data.role);
+      localStorage.setItem("userId", response.data.user_id);
       router.push("/");
       location.reload();
     } else {

@@ -106,7 +106,7 @@ export default class RouterBackService {
   }
   getUserPost(userId, ...args) {
     return this.axiosIns.get(
-      `${this.jwtConfig.userPostEndpoint}/users/${userId}`,
+      `${this.jwtConfig.userPostEndpoint}/${userId}/posts`,
       ...args
     );
   }

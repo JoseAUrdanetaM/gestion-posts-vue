@@ -7,5 +7,5 @@ export default {
   registerEndpoint: "/register",
   postsEndpoint: "/posts",
   usersEndpoint: "/admin/users",
-  userPostEndpoint: "/users/${userId}",
+  userPostEndpoint: "/users",
 };
