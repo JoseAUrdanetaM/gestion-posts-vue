@@ -71,16 +71,12 @@ const registerUser = async () => {
       user.value
     );
     console.log("Usuario registrado:", response.data);
-    // Aquí puedes redirigir o mostrar un mensaje de éxito
-
+    location.reload();
     router.push("/login");
   } catch (error) {
     console.error("Error registrando el usuario:", error.response.data);
-    // Manejar errores, como mostrar mensajes de error en el formulario
   }
 };
 </script>
 
-<style scoped>
-/* Estilos adicionales si los necesitas */
-</style>
+<style scoped></style>

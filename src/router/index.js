@@ -8,10 +8,9 @@ import Register from "../views/Register.vue";
 import Home from "../views/Home.vue";
 
 const routes = [
-  { path: "/", component: Home },
+  { path: "/", component: Blog },
   { path: "/admin-panel", component: AdminPanel },
   { path: "/blog/:id", component: BlogEntry },
-  { path: "/blog", component: Blog },
   { path: "/user-panel", component: UserPanel },
   { path: "/login", component: Login },
   { path: "/register", component: Register },

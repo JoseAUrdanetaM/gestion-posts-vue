@@ -31,7 +31,7 @@
             <td class="px-6 py-4">{{ user.email }}</td>
             <td class="px-6 py-4">
               <button
-                @click="editUser(user.id)"
+                @click="openEditModal(user)"
                 class="text-blue-600 hover:underline"
               >
                 Modificar
@@ -48,16 +48,37 @@
       </table>
     </div>
     <div v-if="errorMessage" class="text-red-500 mt-4">{{ errorMessage }}</div>
+
+    <!-- Modal para editar usuario -->
+    <div v-if="showModal" class="modal">
+      <div class="modal-content">
+        <span @click="closeEditModal" class="close">&times;</span>
+        <h2>Modificar Usuario</h2>
+        <input v-model="editForm.name" placeholder="Nombre" />
+        <input v-model="editForm.email" placeholder="Correo" />
+        <!-- Puedes agregar un campo para rol si es necesario -->
+        <button @click="updateUser">Guardar Cambios</button>
+      </div>
+    </div>
   </div>
+
+  <Register />
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import frontServiceConnect from "../api/frontServiceConnect.js";
 import axios from "axios";
+import Register from "./Register.vue";
 
 const users = ref([]);
 const errorMessage = ref("");
+const showModal = ref(false);
+const editForm = ref({
+  id: null,
+  name: "",
+  email: "",
+});
 
 const fetchUsers = () => {
   frontServiceConnect
@@ -71,44 +92,57 @@ const fetchUsers = () => {
     });
 };
 
-const editUser = () => {
-  frontServiceConnect
-    .updateUser(userId)
-    .then((response) => {
-      console.log("Edit user with ID:", userId);
-    })
-    .catch((error) => {
-      console.error("No se pudieron cargar los usuarios.", error);
-    });
+// Abrir modal con información del usuario
+const openEditModal = (user) => {
+  editForm.value = { ...user };
+  showModal.value = true;
 };
 
-const deleteUser = async (userId) => {
+// Cerrar el modal
+const closeEditModal = () => {
+  showModal.value = false;
+  errorMessage.value = ""; // Limpiar mensaje de error al cerrar el modal
+};
+
+const updateUser = async () => {
+  if (!editForm.value.id) {
+    console.error("No se puede modificar: ID del usuario es null o undefined");
+    return;
+  }
+  const token = localStorage.getItem("token"); // Obtener el token almacenado
   try {
-    await axios.delete(`http://127.0.0.1:8000/api/admin/users/${userId}`); // Ajusta la URL según tu API
+    await axios.put(
+      `http://127.0.0.1:8000/api/admin/users/${editForm.value.id}`,
+      editForm.value,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Incluir el token en los headers
+        },
+      }
+    );
+    fetchUsers(); // Refresca la lista de usuarios después de la modificación
+    closeEditModal();
+  } catch (error) {
+    console.error("Error updating user:", error);
+    errorMessage.value = "No se pudo modificar el usuario.";
+  }
+};
+
+// Eliminar usuario
+const deleteUser = async (userId) => {
+  const token = localStorage.getItem("token"); // Obtener el token almacenado
+  try {
+    await axios.delete(`http://127.0.0.1:8000/api/admin/users/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Incluir el token en los headers
+      },
+    });
     fetchUsers(); // Refresca la lista de usuarios después de eliminar uno
   } catch (error) {
     console.error("Error deleting user:", error);
     errorMessage.value = "No se pudo eliminar el usuario.";
   }
 };
-
-// const deleteUser = () => {
-//   frontServiceConnect
-//     .deleteUser(userId)
-//     .then((response) => {
-//       console.log("eliminando", userId);
-//     })
-//     .catch((error) => {
-//       console.error("No se pudo eliminar el usuario: ", error);
-//     });
-// };
-
-// const editUser = (userId) => {
-//   // Aquí puedes implementar la lógica para editar el usuario.
-//   console.log("Edit user with ID:", userId);
-//   // Podrías abrir un modal similar al que has creado para crear un post
-// };
-
 onMounted(fetchUsers);
 </script>
 

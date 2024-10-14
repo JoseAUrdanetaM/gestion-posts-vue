@@ -2,6 +2,7 @@
   <div class="p-6">
     <h1 class="text-2xl font-bold mb-4">Panel de Usuario</h1>
 
+    <!-- Formulario de actualización de usuario -->
     <form @submit.prevent="updateUser" class="mb-6">
       <div class="mb-4">
         <label for="name" class="block text-sm font-medium">Nombre</label>
@@ -42,6 +43,7 @@
       </button>
     </form>
 
+    <!-- Sección de posts del usuario -->
     <h2 class="text-xl font-bold mb-2">Mis Posts</h2>
     <div v-if="userPosts.length === 0">No tienes posts.</div>
     <ul class="list-disc ml-6">
@@ -56,45 +58,9 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-
-const userForm = ref({
-  name: "",
-  email: "",
-  password: "",
-});
-
-const userPosts = ref([]);
-
-// Obtener información del usuario y sus posts
-const fetchUserData = async () => {
-  const userId = localStorage.getItem("userId"); // Suponiendo que guardas el ID del usuario en el localStorage
-  try {
-    const userResponse = await userService.getUsers(userId);
-    userForm.value = {
-      name: userResponse.data.name,
-      email: userResponse.data.email,
-      password: "",
-    }; // Ajusta según tu API
-    const postsResponse = await userService.getUserPosts(userId);
-    userPosts.value = postsResponse.data; // Ajusta según tu API
-  } catch (error) {
-    console.error("Error fetching user data:", error);
-  }
-};
-
-// Actualizar información del usuario
-const updateUser = async () => {
-  const userId = localStorage.getItem("userId"); // Suponiendo que guardas el ID del usuario en el localStorage
-  try {
-    await userService.updateUser(userId, userForm.value);
-    alert("Información actualizada con éxito.");
-    fetchUserData(); // Refrescar datos del usuario
-  } catch (error) {
-    console.error("Error updating user:", error);
-  }
-};
+import frontServiceConnect from "../api/frontServiceConnect.js";
 </script>
 
 <style scoped>
-/* Estilos opcionales */
+/* Estilos personalizados */
 </style>

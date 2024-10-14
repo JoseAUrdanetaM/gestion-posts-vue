@@ -68,6 +68,7 @@ const login = async () => {
       localStorage.setItem("userName", response.data.name);
       localStorage.setItem("userRole", response.data.role);
       router.push("/");
+      location.reload();
     } else {
       throw new Error("Token no recibido");
     }

@@ -4,7 +4,7 @@
   >
     <div class="flex-grow px-3 py-4 overflow-y-auto">
       <ul class="space-y-2 font-medium">
-        <li>
+        <li v-if="userRole === 'admin'">
           <router-link
             to="/admin-panel"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -14,13 +14,13 @@
         </li>
         <li>
           <router-link
-            to="/blog"
+            to="/"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
           >
             <span class="ms-3">Blog</span>
           </router-link>
         </li>
-        <li>
+        <li v-if="userRole === 'admin' || userRole === 'user'">
           <router-link
             to="/user-panel"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -47,7 +47,6 @@
         </li>
       </ul>
     </div>
-    <!-- Coloca UserStatus aquí, para que aparezca en la parte inferior del sidebar -->
     <div class="p-4 border-t border-gray-200 dark:border-gray-700">
       <UserStatus />
     </div>
@@ -57,6 +56,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import UserStatus from "./UserStatus.vue";
+const userRole = ref(localStorage.getItem("userRole"));
 
 const isLoggedIn = ref(false);
 

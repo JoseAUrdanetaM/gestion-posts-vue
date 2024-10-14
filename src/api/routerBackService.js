@@ -104,6 +104,12 @@ export default class RouterBackService {
   getAdminData(...args) {
     return this.axiosIns.get(this.jwtConfig.adminEndpoint, ...args);
   }
+  getUserPost(userId, ...args) {
+    return this.axiosIns.get(
+      `${this.jwtConfig.userPostEndpoint}/users/${userId}`,
+      ...args
+    );
+  }
 
   // Obtener todos los usuarios
   getUsers(...args) {
