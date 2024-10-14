@@ -5,4 +5,7 @@ const axiosIns = axios.create({
   baseURL: urlSocket,
 });
 
+// Establecer encabezados por defecto
+axios.defaults.headers.common["Authorization"] = "AUTH_TOKEN";
+
 export default axiosIns;

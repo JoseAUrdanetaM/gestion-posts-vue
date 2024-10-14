@@ -1,6 +1,6 @@
 import routeBackConfig from "./routeBackConfig";
 
-export default class routerBackService {
+export default class RouterBackService {
   axiosIns = null;
   jwtConfig = { ...routeBackConfig };
 
@@ -71,18 +71,33 @@ export default class routerBackService {
   }
 
   createPost(...args) {
-    return this.axiosIns.post(this.jwtConfig.postsEndpoint, ...args);
+    return this.axiosIns.post(this.jwtConfig.postsEndpoint, ...args, {
+      headers: {
+        Authorization: `Bearer ${this.getToken()}`, // Asumiendo que tienes un método para obtener el token
+      },
+    });
   }
 
   updatePost(id, ...args) {
-    return this.axiosIns.put(`${this.jwtConfig.postsEndpoint}/${id}`, ...args);
+    return this.axiosIns.put(`${this.jwtConfig.postsEndpoint}/${id}`, ...args, {
+      headers: {
+        Authorization: `Bearer ${this.getToken()}`,
+      },
+    });
   }
 
   deletePost(id, ...args) {
-    return this.axiosIns.delete(
-      `${this.jwtConfig.postEndpoint}/${id}`,
-      ...args
-    );
+    return this.axiosIns.delete(`${this.jwtConfig.postsEndpoint}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${this.getToken()}`,
+      },
+      ...args,
+    });
+  }
+
+  // Método para obtener el token
+  getToken() {
+    return localStorage.getItem("token"); // O de donde estés guardando el token
   }
 
   // Admin

@@ -1,1 +1,1 @@
-<template>Login</template>
+<template>Panel de usuario</template>
