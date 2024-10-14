@@ -61,7 +61,7 @@ import UserStatus from "./UserStatus.vue";
 const isLoggedIn = ref(false);
 
 onMounted(() => {
-  const token = localStorage.getItem("accessToken");
+  const token = localStorage.getItem("token");
   isLoggedIn.value = !!token;
   console.log(isLoggedIn);
 });

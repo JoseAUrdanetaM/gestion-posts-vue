@@ -127,6 +127,7 @@ onMounted(() => {
       :title="post.title"
       :description="post.info"
       :image="post.img"
+      :author="post.user_id"
     />
   </div>
 </template>

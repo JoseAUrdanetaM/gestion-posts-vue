@@ -11,7 +11,9 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const isLoggedIn = ref(!!localStorage.getItem("token"));
 const userName = ref(localStorage.getItem("userName"));
 const userRole = ref(localStorage.getItem("userRole"));
@@ -20,6 +22,7 @@ const logout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("userName");
   localStorage.removeItem("userRole");
+  router.push("/");
   location.reload(); // Recargar la página para reflejar los cambios
 };
 </script>

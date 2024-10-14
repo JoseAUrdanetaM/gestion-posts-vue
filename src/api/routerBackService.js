@@ -104,4 +104,35 @@ export default class RouterBackService {
   getAdminData(...args) {
     return this.axiosIns.get(this.jwtConfig.adminEndpoint, ...args);
   }
+
+  // Obtener todos los usuarios
+  getUsers(...args) {
+    return this.axiosIns.get(this.jwtConfig.usersEndpoint, ...args);
+  }
+
+  getUser(id, ...args) {
+    return this.axiosIns.get(`${this.jwtConfig.usersEndpoint}/${id}`, ...args);
+  }
+
+  // Crear un nuevo usuario
+  createUser(userData, ...args) {
+    return this.axiosIns.post(this.jwtConfig.usersEndpoint, userData, ...args);
+  }
+
+  // Actualizar un usuario existente
+  updateUser(userId, userData, ...args) {
+    return this.axiosIns.put(
+      `${this.jwtConfig.usersEndpoint}/${userId}`,
+      userData,
+      ...args
+    );
+  }
+
+  // Eliminar un usuario
+  deleteUser(userId, ...args) {
+    return this.axiosIns.delete(
+      `${this.jwtConfig.usersEndpoint}/${userId}`,
+      ...args
+    );
+  }
 }

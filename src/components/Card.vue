@@ -8,6 +8,7 @@
       alt="Blog image"
       class="mb-4 w-full h-48 object-cover rounded-lg"
     />
+    <p class="text-gray-500 dark:text-gray-400 mb-2">Autor: {{ author }}</p>
     <h5
       class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
     >
@@ -62,6 +63,7 @@ const props = defineProps({
   title: String,
   description: String,
   image: String, // Nueva prop para la imagen
+  author: String, // Nueva prop para la imagen
   canEdit: Boolean, // Prop para determinar si el usuario puede editar
 });
 
